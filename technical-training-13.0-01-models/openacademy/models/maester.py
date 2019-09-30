@@ -9,4 +9,4 @@ class Maester(models.Model):
 
     firstname = fields.Char(required=True)
     lastname = fields.Char(required=True)
-    
+    classes = fields.Many2one('academyclass')
