@@ -1,6 +1,8 @@
 import datetime
 from dateutil import relativedelta
 from odoo import api, fields, models, _
+from . import maester
+
 ACADEMYCLASS_LEVEL = [
     ('0', 'All'),
     ('1', 'Beginner'),
@@ -15,3 +17,4 @@ class Academyclass(models.Model):
 
     coursename = fields.Char(required=True)
     level = fields.Selection(ACADEMYCLASS_LEVEL, string='Level', default='0')
+    responsible = fields.One2Many('maester')
