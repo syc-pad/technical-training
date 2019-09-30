@@ -10,6 +10,6 @@ class Attendee(models.Model):
 
     firstname = fields.Char(required=True)
     lastname = fields.Char(required=True)
-    attendeeclass = fields.Many2Many('academyclass')
+    attendeeclass = fields.Many2many('academyclass')
 
 # def name_get() pour override le comportement du display_name
