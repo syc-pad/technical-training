@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+import logging
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
+_logger = logging.getLogger(__name__)
 
 class Course(models.Model):
     _name = 'openacademy.course'
@@ -27,22 +30,39 @@ class Session(models.Model):
     start_date = fields.Date(default=fields.Date.context_today)
     duration = fields.Float(digits=(6, 2), help="Duration in days", default=1)
     maximum_capacity = fields.Integer(string="Capacité d'accueil", default=10)
-    total_attendees = fields.Float(compute='_compute_attendies', store=True)
+    total_attendees = fields.Integer(compute='_compute_attendies', store=True)
 
     instructor_id = fields.Many2one('openacademy.partner', string="Instructor")
+    level = fields.Selection(related='course_id.level')
     course_id = fields.Many2one('openacademy.course', ondelete='cascade', string="Course", required=True)
     attendee_ids = fields.Many2many('openacademy.partner', string="Attendees")
 
-@api.depends('attendee_ids')
-def _compute_attendies(self):
-    for record in self:
-        record.total_attendees = len(record.attendee_ids)
+    # Pour les depends, le live reload fait le boulot
+    @api.depends('attendee_ids')
+    def _compute_attendies(self):
+        for record in self:
+            record.total_attendees = len(record.attendee_ids)
 
-@api.onchange('total_attendees')
-def check_capacity(self):
-    if (self.maximum_capacity > len(record.attendee_ids)):
-        self.attendance_state = 'over'
-    if (self.maximum_capacity < len(record.attendee_ids)):
-        self.attendance_state = 'under'
-    if (self.maximum_capacity == len(record.attendee_ids)):
-        self.attendance_state = 'ok'
+    # Pour les onChange, il faut faire F5
+    @api.onchange('total_attendees', 'maximum_capacity')
+    def check_capacity(self):
+        #for record in self: (inutile pour un onchange)
+        if (self.maximum_capacity < len(self.attendee_ids)):
+            self.attendance_state = 'over'
+        if (self.maximum_capacity > len(self.attendee_ids)):
+            self.attendance_state = 'under'
+        if (self.maximum_capacity == len(self.attendee_ids)):
+            self.attendance_state = 'ok'
+
+    @api.constrains('attendee_ids')
+    def check_instructor_not_attendee(self):
+        for record in self:
+            if record.instructor_id in record.attendee_ids:
+                _logger.info('ID du prof %s', record.instructor_id)
+                raise ValidationError("Le professeur %s ne peut pas être participant" % record.instructor_id.name)
+
+    @api.constrains('start_date')
+    def check_date(self):
+        # Date.today() ou Datetime.now()
+        if self.start_date < fields.Date.today():
+            raise ValidationError(_('Le cours ne peut avoir lieu dans le passé'))
