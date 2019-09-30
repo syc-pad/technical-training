@@ -15,7 +15,7 @@ class Academyclass(models.Model):
     _description = 'Class created by a Maester'
     _order = 'id desc'
 
-    coursename = fields.Char(required=True)
+    name = fields.Char(required=True, string='Nom du cours')
     level = fields.Selection(ACADEMYCLASS_LEVEL, string='Level', default='0')
     maester_id = fields.Many2one('maester', string='Maester')
     students = fields.Many2many('attendee')
