@@ -26,7 +26,7 @@ class Session(models.Model):
 
     start_date = fields.Date(default=fields.Date.context_today)
     duration = fields.Float(digits=(6, 2), help="Duration in days", default=1)
-    maximum_capacity = fields.Int(string="Capacité d'accueil", default=10)
+    maximum_capacity = fields.Integer(string="Capacité d'accueil", default=10)
     total_attendees = fields.Float(compute='_compute_attendies', store=True)
 
     instructor_id = fields.Many2one('openacademy.partner', string="Instructor")
