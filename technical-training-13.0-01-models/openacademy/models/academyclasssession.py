@@ -8,5 +8,5 @@ class Academyclasssession(models.Model):
     _order = 'sessiondate asc, name asc'
 
     name = fields.Char(required=True)
-    sessiondate = fieds.Datetime('Session datetime')
+    sessiondate = fields.Datetime('Session datetime')
     masterclass = fields.One2many('academyclass')
