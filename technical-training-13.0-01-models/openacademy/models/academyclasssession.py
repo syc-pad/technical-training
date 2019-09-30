@@ -10,4 +10,6 @@ class Academyclasssession(models.Model):
     name = fields.Char(required=True)
     sessiondate = fields.Datetime('Session datetime')
     course_id = fields.Many2one('academyclass', string='Cours', required=True, ondelete='cascade')
+    attendee_ids = fields.Many2many('attendee', string='Attendees')
+    # si tu avais un master qui utilise le même modelemaster_ids = fields.Many2many('maester', string='Attendees')
     # masterclass = fields.One2many('academyclass')
