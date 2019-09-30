@@ -9,4 +9,5 @@ class Academyclasssession(models.Model):
 
     name = fields.Char(required=True)
     sessiondate = fields.Datetime('Session datetime')
+    course_id = fields.Many2one('academyclass', string='Cours', required=True, ondelete='cascade')
     # masterclass = fields.One2many('academyclass')
