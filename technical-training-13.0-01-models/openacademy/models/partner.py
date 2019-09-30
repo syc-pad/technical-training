@@ -6,3 +6,9 @@ class Partner(models.Model):
 
     name = fields.Char('Name')
     type = fields.Selection([('student','Student'), ('teacher', 'Teacher')], default='student')
+    comment = fields.Char(compute='_compute_comment')
+
+@api.depends('name')
+def _compute_comment(self):
+    if record.name == "Pouic Pouic":
+        return = "Quel nom ridicule !""
