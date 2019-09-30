@@ -17,4 +17,4 @@ class Academyclass(models.Model):
 
     coursename = fields.Char(required=True)
     level = fields.Selection(ACADEMYCLASS_LEVEL, string='Level', default='0')
-    responsible = fields.One2Many('maester')
+    responsible = fields.One2many('maester')
