@@ -11,4 +11,4 @@ class Partner(models.Model):
 @api.depends('name')
 def _compute_comment(self):
     if record.name == "Pouic Pouic":
-        return = "Quel nom ridicule !""
+        return "Quel nom ridicule !""
