@@ -9,4 +9,4 @@ class Academyclasssession(models.Model):
 
     name = fields.Char(required=True)
     sessiondate = fields.Datetime('Session datetime')
-    masterclass = fields.One2many('academyclass')
+    # masterclass = fields.One2many('academyclass')
