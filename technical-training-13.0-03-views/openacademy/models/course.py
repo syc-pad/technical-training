@@ -13,7 +13,14 @@ class Course(models.Model):
     session_ids = fields.One2many('openacademy.session', 'course_id', string="Sessions")
 
     level = fields.Selection([('1', 'Easy'), ('2', 'Medium'), ('3', 'Hard')], string="Difficulty Level")
-
+# max_seats = ...
+# on put appeler des fonctions aussi
+# @api.constrains('max_seats')
+# def check_attendee(self):
+#   for rec in self:
+#       rec.session_ids.NomDeLaFonction()
+#
+#
 
 class Session(models.Model):
     _name = 'openacademy.session'
