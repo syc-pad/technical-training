@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-
+  <data>
     <menuitem id="menu_openacademy_root" name="Open Academy"
         sequence="1"
         web_icon="helpdesk,static/description/icon.png"
@@ -17,5 +17,5 @@
     <menuitem id="menu_openacademy_sessions" name="Sessions"
         sequence="30" parent="menu_openacademy_root"
         groups="openacademy.model_openacademy_session"/>
-
+  </data>
 </odoo>
