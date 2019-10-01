@@ -11,6 +11,19 @@
             </tree>
         </field>
     </record>
+    
+    <record id="course_view_filter" model="ir.ui.view">
+        <field name="name">openacademy.course.select</field>
+        <field name="model">openacademy.course</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Search Session">
+                <field name="name" string="Session" filter_domain="['|', ('name', 'ilike', self), ('responsible_id', 'child_of', self)]"/>
+                <field name="responsible_id" operator="child_of" string="Partner"/>
+                <field name="level"/>
+            </search>
+        </field>
+    </record>
 
     <record id="course_view_form" model="ir.ui.view">
         <field name="name">openacademy.course.form</field>
