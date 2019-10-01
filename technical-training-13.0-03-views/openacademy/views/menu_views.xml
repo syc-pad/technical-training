@@ -18,7 +18,6 @@
             name="Courses"
             parent="openacademy.course_menu"
             sequence="10"
-            action="course_action"
     />
 
     <menuitem
@@ -26,6 +25,5 @@
             name="Sessions"
             parent="openacademy.course_menu"
             sequence="20"
-            action="session_action"
     />
 </odoo>
